@@ -2,37 +2,33 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat2Video</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Script zu Video</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Willkommen bei Chat2Video!</h1>
-            <p>Erstelle deine TikTok-Videos basierend auf Chat-Nachrichten.</p>
-        </header>
-        
-        <section class="form-section">
-            <form action="/" method="POST" enctype="multipart/form-data">
-                <label for="profile_picture">Profilbild:</label>
-                <input type="file" name="profile_picture" id="profile_picture" accept="image/*">
-                
-                <label for="name">Name des Profils:</label>
-                <input type="text" name="name" id="name" placeholder="Gib einen Namen ein">
-                
-                <label for="script">Script (Nachrichten):</label>
-                <textarea name="script" id="script" rows="6" placeholder="Schreibe das Skript hier..."></textarea>
-                
-                <button type="submit" id="submit-button">Video erstellen</button>
-            </form>
-        </section>
+        <h1>Script zu Video Generator</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="text" name="name" placeholder="Dein Name" required>
+            <textarea name="script" placeholder="Script (z.B. Person1: Hallo!)" required rows="6">
+Person1: Hallo, wie geht es dir?
+Person2: Mir geht's gut, danke! Und dir?
+Person1: Auch gut. Schön, dich zu sehen.
+            </textarea>
+            <button type="submit">Video erstellen</button>
+        </form>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        {% if video_url %}
+            <h2>Dein generiertes Video:</h2>
+            <video controls autoplay>
+                <source src="{{ video_url }}" type="video/mp4">
+                Dein Browser unterstützt kein Video.
+            </video>
+        {% endif %}
     </div>
-
-    <footer>
-        <p>&copy; 2025 Chat2Video. Alle Rechte vorbehalten.</p>
-    </footer>
-
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
